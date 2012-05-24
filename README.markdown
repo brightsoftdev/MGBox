@@ -167,6 +167,6 @@ line.textColor = [UIColor colorWithWhite:0.8 alpha:1];
 Fine tuning of lines with multiple elements.
 
 ```objc
-line.linePadding;
-@property (nonatomic, assign) CGFloat itemPadding;
+line.linePadding = 3.0;
+line.itemPadding = 2.0;
 ```
