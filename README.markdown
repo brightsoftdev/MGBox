@@ -16,23 +16,22 @@ Designed for rapid table creation with minimal code, easy customisation, attract
 - Animations for box adding, removing, and moving  
 - Optional edge snapping on scroll
 
-## Screenshots
+## Example Screenshots
 
-### The Demo App
+### The Demo Project App:
 
 ![Demo App Screenshot](http://cloud.github.com/downloads/sobri909/MGBox/DemoAppScreenshot.png)
 
-### Real App Screenshots (made by the convenience screenshot method)
+### Real App Screenshots (made with the convenience "screenshot" method):
 
-Complex box layouts created with simple code
+Complex box layouts created with simple code. (Note: The button styles in these two screenshots aren't included. Those are mine, yo).
 
 ![IfAlarm Screenshot 1](http://cloud.github.com/downloads/sobri909/MGBox/Screenshot1.png)
-
 ![IfAlarm Screenshot 2](http://cloud.github.com/downloads/sobri909/MGBox/Screenshot2.png)
 
 ## Setup
 
-Add the MGBox folder to your project
+Add the MGBox folder to your project.
 
 ## Example Usage
 
