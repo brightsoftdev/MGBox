@@ -18,8 +18,7 @@ Designed for rapid table creation with minimal code, easy customisation, attract
 
 ## Setup
 
-1. Add the MGBox folder to your project
-2. That's it
+Add the MGBox folder to your project
 
 ## Example Usage
 
@@ -67,7 +66,7 @@ MGBoxLine *multiline = [MGBoxLine multilineWithText:blah font:nil padding:24];
 [box2.topLines addObject:multiline];
 ```
 
-### Tell the MGSCrollView to Draw It All To Screen:
+### Tell the Scroll Container to Draw It All To Screen:
 
 ```objc
 [scroller drawBoxesWithSpeed:0.6];
@@ -85,14 +84,15 @@ scroller.delegate = self;
 
 ### In Your ViewController.h:
 
-Own up to being a `UIScrollViewDelegate`.
+Own up to being a `UIScrollViewDelegate`
 
 ```objc
 @interface ViewController : UIViewController <UIScrollViewDelegate>
 ```
 
 ### In Your ViewController.m:
-```
+
+```objc
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     [(MGScrollView *)scrollView snapToNearestBox];
 }
