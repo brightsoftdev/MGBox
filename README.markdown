@@ -133,3 +133,40 @@ tweet.completionHandler = ^(TWTweetComposeViewControllerResult result) {
 [self presentModalViewController:tweet animated:YES];
 ```
 
+## More Bits and Pieces
+
+### MGBoxLine
+
+Some useful properties to avoid getting your hands too dirty.
+
+#### Line Underlines
+```objc
+// MGUnderlineNone, MGUnderlineTop or MGUnderlineBottom
+line.underlineType = MGUnderlineTop; 
+```
+
+#### Line Content Side Precedence
+
+For deciding whether content on the right or left takes precedence when space runs out. `UILabels` will shortened to fit. `UIImages` and `UIViews` will be removed if there's not enough room.
+
+```objc
+// MGSidePrecedenceLeft or MGSidePrecedenceRight
+line.sidePrecedence = MGSidePrecedenceRight;
+```
+
+#### Line Content Font Styling
+
+```objc
+line.font      = [UIFont fontWithName:@"HelveticaNeue-Bold" size:16];
+line.rightFont = [UIFont fontWithName:@"HelveticaNeue" size:16];
+line.textColor = [UIColor colorWithWhite:0.8 alpha:1];
+```
+
+#### Line Item Padding
+
+Fine tuning of lines with multiple elements.
+
+```objc
+line.linePadding;
+@property (nonatomic, assign) CGFloat itemPadding;
+```
