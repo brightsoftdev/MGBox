@@ -6,6 +6,8 @@
 #import "MGScrollView.h"
 #import "MGBoxProtocol.h"
 
+#define BOTTOM_MARGIN 10.0
+
 @implementation MGScrollView
 
 @synthesize boxes;
@@ -116,8 +118,43 @@
     for (UIView <MGBoxProtocol> *box in boxes) {
         height += box.topMargin + box.frame.size.height + box.bottomMargin;
     }
-    height += 5; // pad the bottom of the box
+    height += BOTTOM_MARGIN; // pad the bottom of the box
     self.contentSize = CGSizeMake(self.frame.size.width, height);
+}
+
+- (void)snapToNearestBox {
+    if (self.contentSize.height <= self.frame.size.height) {
+        return;
+    }
+    if ([self.boxes count] < 2) {
+        return;
+    }
+
+    CGSize size = self.frame.size;
+    CGPoint offset = self.contentOffset;
+    CGFloat fromBottom = self.contentSize.height - (offset.y + size.height);
+    CGFloat fromTop = offset.y;
+    CGFloat newY = 0;
+
+    // near the bottom? then snap to
+    UIView *last = [self.boxes lastObject];
+    if (fromBottom < last.frame.size.height / 2 && fromBottom < fromTop) {
+        newY = self.contentSize.height - size.height;
+
+    } else { // find nearest box
+        CGFloat oldY = offset.y;
+        CGFloat diff = self.contentSize.height;
+        for (UIView *box in self.boxes) {
+            if (ABS(box.frame.origin.y - BOTTOM_MARGIN - oldY) < diff) {
+                diff = ABS(box.frame.origin.y - oldY);
+                newY = box.frame.origin.y - BOTTOM_MARGIN;
+            }
+        }
+    }
+
+    [UIView animateWithDuration:0.1 animations:^{
+        self.contentOffset = CGPointMake(0, newY);
+    }];
 }
 
 @end

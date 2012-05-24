@@ -1,13 +1,13 @@
 //
-//  Created by matt on 14/05/12.
-//
+//  Created by Matt Greenfield on 25/05/12.
+//  Copyright 2012 Big Paua. All rights reserved.
 //
 
 #import "MGBox.h"
 #import "MGBoxLine.h"
 
-#define DEFAULT_WIDTH     300.0
-#define DEFAULT_LEFT_MARGIN 0.0
+#define DEFAULT_WIDTH     304.0
+#define DEFAULT_LEFT_MARGIN 8.0
 
 @implementation MGBox
 
@@ -64,6 +64,7 @@
 - (void)drawLine:(UIView *)line fromLines:(NSArray *)lines at:(CGFloat)y {
     if ([line isKindOfClass:[MGBoxLine class]]) {
         MGBoxLine *pline = (MGBoxLine *)line;
+        pline.parentBox = self;
         [pline layoutContents];
         if (pline == [lines lastObject] && pline.underlineType
             != UnderlineTop) {
@@ -75,7 +76,7 @@
     if (lineSize.width != self.width) {
         x = (self.width - lineSize.width) / 2;
     }
-    line.frame = CGRectMake(round(x), y, lineSize.width, lineSize.height);
+    line.frame = CGRectMake(roundf(x), y, lineSize.width, lineSize.height);
     [self.content addSubview:line];
 }
 
@@ -103,7 +104,8 @@
 
     // box with shadow
     CGRect frame = CGRectMake(0, 0, size.width + 40, size.height + 40);
-    CGFloat cx = round(frame.size.width / 2), cy = round(frame.size.height / 2);
+    CGFloat cx = roundf(frame.size.width / 2),
+            cy = roundf(frame.size.height / 2);
     cy = (int)size.height % 2 ? cy + 0.5 : cy; // avoid blur
     imageView.center = CGPointMake(cx, cy);
     imageView.layer.backgroundColor = [UIColor clearColor].CGColor;

@@ -1,5 +1,5 @@
 //
-//  Created by Matt Greenfield on 3/01/12.
+//  Created by Matt Greenfield on 25/05/12.
 //  Copyright 2012 Big Paua. All rights reserved.
 //
 
@@ -35,14 +35,15 @@ typedef enum {
 @property (nonatomic, retain) UIView *rightViews;
 @property (nonatomic, retain) id misc;
 
++ (id)line;
 + (id)lineWithWidth:(CGFloat)width;
-+ (id)lineWithContents:(NSArray *)_contents
-                 width:(CGFloat)width;
++ (id)lineWithLeft:(NSObject *)left right:(NSObject *)right;
 + (id)lineWithLeft:(NSObject *)left right:(NSObject *)right
              width:(CGFloat)width;
 + (id)multilineWithText:(NSString *)text font:(UIFont *)font
+                padding:(CGFloat)padding;
++ (id)multilineWithText:(NSString *)text font:(UIFont *)font
                 padding:(CGFloat)padding width:(CGFloat)width;
-
 - (void)layoutContents;
 
 - (UILabel *)makeLabel:(NSString *)text right:(BOOL)right;

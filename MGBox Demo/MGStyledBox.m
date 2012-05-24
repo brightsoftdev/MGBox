@@ -5,10 +5,10 @@
 
 #import "MGStyledBox.h"
 
-#define DEFAULT_WIDTH          310.0
-#define DEFAULT_TOP_MARGIN       5.0
-#define DEFAULT_LEFT_MARGIN      5.0
-#define CORNER_RADIUS            3.0
+#define DEFAULT_WIDTH          304.0
+#define DEFAULT_TOP_MARGIN      10.0
+#define DEFAULT_LEFT_MARGIN      8.0
+#define CORNER_RADIUS            4.0
 
 @implementation MGStyledBox
 
@@ -39,7 +39,7 @@
     self.backgroundColor =
             [UIColor colorWithRed:0.94 green:0.94 blue:0.95 alpha:1];
     self.layer.cornerRadius = CORNER_RADIUS;
-    self.layer.shadowColor = [UIColor colorWithWhite:0.22 alpha:1].CGColor;
+    self.layer.shadowColor = [UIColor colorWithWhite:0.12 alpha:1].CGColor;
     self.layer.shadowOffset = CGSizeMake(0, 0.5);
     self.layer.shadowRadius = 0.7;
     self.layer.shadowOpacity = 1;

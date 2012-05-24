@@ -1,8 +1,7 @@
 //
-//  Created by matt on 21/03/12.
+//  Created by Matt Greenfield on 25/05/12.
+//  Copyright 2012 Big Paua. All rights reserved.
 //
-//
-
 
 @protocol MGBoxProtocol
 

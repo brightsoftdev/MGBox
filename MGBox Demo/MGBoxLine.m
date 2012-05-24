@@ -1,5 +1,5 @@
 //
-//  Created by Matt Greenfield on 3/01/12.
+//  Created by Matt Greenfield on 25/05/12.
 //  Copyright 2012 Big Paua. All rights reserved.
 //
 
@@ -7,7 +7,7 @@
 #import "MGButton.h"
 
 #define DEFAULT_HEIGHT      40.0
-#define DEFAULT_WIDTH      310.0
+#define DEFAULT_WIDTH      304.0
 #define DEFAULT_LINE_PADDING 4.0
 #define DEFAULT_ITEM_PADDING 3.0
 
@@ -55,14 +55,24 @@
     return self;
 }
 
++ (id)line {
+    return [self lineWithWidth:0];
+}
+
 + (id)lineWithWidth:(CGFloat)width {
+    width = width ? width : DEFAULT_WIDTH;
     MGBoxLine *line = [[self alloc] initWithFrame:CGRectMake(0, 0,
             width, DEFAULT_HEIGHT)];
     return line;
 }
 
 + (id)multilineWithText:(NSString *)text font:(UIFont *)font
-                         padding:(CGFloat)padding width:(CGFloat)width {
+                padding:(CGFloat)padding {
+    return [self multilineWithText:text font:font padding:padding width:0];
+}
+
++ (id)multilineWithText:(NSString *)text font:(UIFont *)font
+                padding:(CGFloat)padding width:(CGFloat)width {
     width = width ? width : DEFAULT_WIDTH;
     font = font ? font : [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
 
@@ -83,15 +93,19 @@
 }
 
 + (id)lineWithContents:(NSArray *)_contents
-                          width:(CGFloat)width {
+                 width:(CGFloat)width {
     MGBoxLine *line = [[self alloc] initWithFrame:CGRectMake(0, 0,
             width, DEFAULT_HEIGHT)];
     line.contentsLeft = [_contents mutableCopy];
     return line;
 }
 
++ (id)lineWithLeft:(NSObject *)left right:(NSObject *)right {
+    return [self lineWithLeft:left right:right width:0];
+}
+
 + (id)lineWithLeft:(NSObject *)left right:(NSObject *)right
-                      width:(CGFloat)width {
+             width:(CGFloat)width {
     width = width ? width : DEFAULT_WIDTH;
     MGBoxLine *line = [[self alloc] initWithFrame:CGRectMake(0, 0,
             width, DEFAULT_HEIGHT)];
@@ -165,9 +179,9 @@
 
     int i;
     for (i = 0; i < [contentsLeft count]; i++) {
-        NSObject *piece = [contentsLeft objectAtIndex:i];
+        id piece = [contentsLeft objectAtIndex:i];
 
-        // wrap strings in UILabels
+        // wrap NSStrings in UILabels
         if ([piece isKindOfClass:[NSString class]]) {
             x += itemPadding;
             UILabel *label = [self makeLabel:(NSString *)piece right:NO];
@@ -179,26 +193,29 @@
             [leftViews addSubview:label];
             x += size.width + itemPadding;
 
-        } else { // presumably already a UIView
-            UIView *view = (UIView *)piece;
-
-            if ([view isKindOfClass:[MGButton class]]) {
-                [(MGButton *)view setMaxWidth:0];
-                CGSize size = view.frame.size;
-                if (x + size.width > widthLimit) { // needs slimming
-                    CGFloat maxWidth = widthLimit - x > 0 ? widthLimit - x : 0;
-                    [(MGButton *)view setMaxWidth:maxWidth];
-                    size = view.frame.size;
-                }
-                view.frame = CGRectMake(x, view.frame.origin.y, size.width,
-                        size.height);
-            } else {
-                CGSize size = view.frame.size;
-                x += itemPadding; // left pad arbitrary views
-                CGFloat y = height / 2 - view.frame.size.height / 2;
-                view.frame = CGRectMake(x, round(y), size.width, size.height);
-                x += itemPadding; // right pad aribtrary views
+            // MGButtons are special
+        } else if ([piece isKindOfClass:[MGButton class]]) {
+            MGButton *button = piece;
+            button.maxWidth = 0;
+            CGSize size = button.frame.size;
+            if (x + size.width > widthLimit) { // needs slimming
+                button.maxWidth = widthLimit - x > 0 ? widthLimit - x : 0;
+                size = button.frame.size;
             }
+            button.frame = CGRectMake(x, button.frame.origin.y, size.width,
+                    size.height);
+            [leftViews addSubview:button];
+            x += button.frame.size.width;
+
+        } else { // hopefully is a UIView or UIImage then
+            UIView *view =
+                    [piece isKindOfClass:[UIImage class]] ? [[UIImageView alloc]
+                           initWithImage:piece] : piece;
+            CGSize size = view.frame.size;
+            x += itemPadding; // left pad arbitrary views
+            CGFloat y = height / 2 - view.frame.size.height / 2;
+            view.frame = CGRectMake(x, roundf(y), size.width, size.height);
+            x += itemPadding; // right pad aribtrary views
             [leftViews addSubview:view];
             x += view.frame.size.width;
         }
@@ -227,7 +244,7 @@
     CGFloat minX = self.frame.size.width - widthLimit;
     int i;
     for (i = 0; i < [contentsRight count]; i++) {
-        NSObject *piece = [contentsRight objectAtIndex:i];
+        id piece = [contentsRight objectAtIndex:i];
 
         // wrap strings in UILabels
         if ([piece isKindOfClass:[NSString class]]) {
@@ -245,30 +262,32 @@
             [rightViews addSubview:label];
             x -= itemPadding;
 
-        } else { // presumably already a UIView
-            UIView *view = (UIView *)piece;
-
-            if ([view isKindOfClass:[MGButton class]]) {
-                [(MGButton *)view setMaxWidth:0];
-                CGSize size = view.frame.size;
-                if (x - size.width < minX) { // needs slimming
-                    CGFloat maxWidth = x - minX > 0 ? x - minX : 0;
-                    [(MGButton *)view setMaxWidth:maxWidth];
-                    size = view.frame.size;
-                    x = minX;
-                } else { // it fits
-                    x -= size.width;
-                }
-                view.frame = CGRectMake(x, view.frame.origin.y, size.width,
-                        size.height);
-            } else {
-                CGSize size = view.frame.size;
+            // MGButtons are special
+        } else if ([piece isKindOfClass:[MGButton class]]) {
+            MGButton *view = piece;
+            view.maxWidth = 0;
+            CGSize size = view.frame.size;
+            if (x - size.width < minX) { // needs slimming
+                view.maxWidth = x - minX > 0 ? x - minX : 0;
+                size = view.frame.size;
+                x = minX;
+            } else { // it fits
                 x -= size.width;
-                x -= itemPadding; // right pad arbitrary views
-                CGFloat y = round(height / 2 - view.frame.size.height / 2);
-                view.frame = CGRectMake(x, y, size.width, size.height);
-                x -= itemPadding; // left pad arbitrary views
             }
+            view.frame =
+                    CGRectMake(x, view.frame.origin.y, size.width, size.height);
+            [rightViews addSubview:view];
+
+        } else { // hopefully is a UIView or UIImage then
+            UIView *view =
+                    [piece isKindOfClass:[UIImage class]] ? [[UIImageView alloc]
+                           initWithImage:piece] : piece;
+            CGSize size = view.frame.size;
+            x -= size.width;
+            x -= itemPadding; // right pad arbitrary views
+            CGFloat y = height / 2 - view.frame.size.height / 2;
+            view.frame = CGRectMake(x, roundf(y), size.width, size.height);
+            x -= itemPadding; // left pad arbitrary views
             [rightViews addSubview:view];
         }
 
@@ -298,7 +317,6 @@
     self.frame = CGRectMake(pos.x, pos.y, size.width, height);
     self.underlineType = underlineType;
 }
-
 
 
 - (void)setUnderlineType:(UnderlineType)type {
