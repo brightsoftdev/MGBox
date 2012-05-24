@@ -311,7 +311,6 @@
     self.underlineType = underlineType;
 }
 
-
 - (void)setUnderlineType:(UnderlineType)type {
     underlineType = type;
     CGSize size = self.frame.size;
