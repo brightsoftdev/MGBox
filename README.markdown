@@ -147,7 +147,7 @@ line.underlineType = MGUnderlineTop;
 
 #### Line Content Side Precedence
 
-For deciding whether content on the right or left takes precedence when space runs out. `UILabels` will shortened to fit. `UIImages` and `UIViews` will be removed if there's not enough room.
+For deciding whether content on the right or left takes precedence when space runs out. `UILabels` will be shortened to fit. `UIImages` and `UIViews` will be removed from the centre outwards, if there's not enough room to fit them in.
 
 ```objc
 // MGSidePrecedenceLeft or MGSidePrecedenceRight
