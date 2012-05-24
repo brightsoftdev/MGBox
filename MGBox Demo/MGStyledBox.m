@@ -1,6 +1,7 @@
 //
-//  Created by Matt Greenfield on 3/01/12.
-//  Copyright 2012 Big Paua. All rights reserved.
+//  Created by Matt Greenfield on 24/05/12
+//  Copyright (c) 2012 Big Paua. All rights reserved
+//  http://bigpaua.com/
 //
 
 #import "MGStyledBox.h"

@@ -1,6 +1,7 @@
 //
-//  Created by matt on 21/03/12.
-//
+//  Created by Matt Greenfield on 24/05/12
+//  Copyright (c) 2012 Big Paua. All rights reserved
+//  http://bigpaua.com/
 //
 
 #import <Foundation/Foundation.h>

@@ -1,5 +1,7 @@
 //
-// Prefix header for all source files of the 'MGBox Demo App' target in the 'MGBox Demo App' project
+//  Created by Matt Greenfield on 24/05/12
+//  Copyright (c) 2012 Big Paua. All rights reserved
+//  http://bigpaua.com/
 //
 
 #import <Availability.h>
@@ -9,6 +11,8 @@
 #endif
 
 #ifdef __OBJC__
-    #import <UIKit/UIKit.h>
-    #import <Foundation/Foundation.h>
+
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+
 #endif

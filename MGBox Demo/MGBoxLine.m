@@ -1,6 +1,7 @@
 //
-//  Created by Matt Greenfield on 25/05/12.
-//  Copyright 2012 Big Paua. All rights reserved.
+//  Created by Matt Greenfield on 24/05/12
+//  Copyright (c) 2012 Big Paua. All rights reserved
+//  http://bigpaua.com/
 //
 
 #import "MGBoxLine.h"
@@ -47,10 +48,10 @@
         self.height = DEFAULT_HEIGHT;
         self.linePadding = DEFAULT_LINE_PADDING;
         self.itemPadding = DEFAULT_ITEM_PADDING;
-        self.sidePrecedence = SidePrecedenceLeft;
+        self.sidePrecedence = MGSidePrecedenceLeft;
         self.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:16];
         self.textColor = [UIColor blackColor];
-        self.underlineType = UnderlineBottom;
+        self.underlineType = MGUnderlineBottom;
     }
     return self;
 }
@@ -89,14 +90,6 @@
 
     MGBoxLine *line = [self lineWithLeft:label right:nil width:width];
     line.height = label.frame.size.height;
-    return line;
-}
-
-+ (id)lineWithContents:(NSArray *)_contents
-                 width:(CGFloat)width {
-    MGBoxLine *line = [[self alloc] initWithFrame:CGRectMake(0, 0,
-            width, DEFAULT_HEIGHT)];
-    line.contentsLeft = [_contents mutableCopy];
     return line;
 }
 
@@ -150,7 +143,7 @@
     CGRect frame = self.frame;
     frame.size.width = self.width;
     self.frame = frame;
-    if (sidePrecedence == SidePrecedenceLeft) {
+    if (sidePrecedence == MGSidePrecedenceLeft) {
         CGFloat remainder = [self layoutLeftWithin:self.width - linePadding];
         [self layoutRightWithin:remainder];
     } else {
@@ -323,16 +316,16 @@
     underlineType = type;
     CGSize size = self.frame.size;
     switch (underlineType) {
-    case UnderlineTop:
+    case MGUnderlineTop:
         self.solidUnderline.frame = CGRectMake(0, 0, size.width, 2);
         [self.layer addSublayer:self.solidUnderline];
         break;
-    case UnderlineBottom:
+    case MGUnderlineBottom:
         self.solidUnderline.frame =
                 CGRectMake(0, size.height - 1, size.width, 2);
         [self.layer addSublayer:self.solidUnderline];
         break;
-    case UnderlineNone:
+    case MGUnderlineNone:
     default:
         [self.solidUnderline removeFromSuperlayer];
         break;
