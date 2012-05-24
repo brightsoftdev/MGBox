@@ -23,6 +23,7 @@
 
     UIFont *headerFont = [UIFont fontWithName:@"HelveticaNeue-Bold" size:16];
 
+    // make an MGScrollView for holding boxes
     CGRect frame = CGRectMake(0, 0, 320, 460);
     scroller = [[MGScrollView alloc] initWithFrame:frame];
     [self.view addSubview:scroller];
@@ -32,9 +33,11 @@
     // add a moveable box
     [self addBox:nil];
 
+    // add a new MGBox to the MGScrollView
     MGStyledBox *box1 = [MGStyledBox box];
     [scroller.boxes addObject:box1];
 
+    // add some MGBoxLines to the box
     MGBoxLine *head1 =
             [MGBoxLine lineWithLeft:@"Left And Right Content" right:nil];
     head1.font = headerFont;
@@ -84,6 +87,7 @@
     MGBoxLine *imgLine = [MGBoxLine lineWithLeft:imgLineLeft right:nil];
     [box3.topLines addObject:imgLine];
 
+    // draw all the boxes and animate as appropriate
     [scroller drawBoxesWithSpeed:ANIM_SPEED];
     [scroller flashScrollIndicators];
 }
@@ -185,7 +189,7 @@
     [scroller drawBoxesWithSpeed:ANIM_SPEED];
 }
 
-#pragma mark - UIScrollViewDelegate
+#pragma mark - UIScrollViewDelegate (for snapping boxes to edges)
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     [(MGScrollView *)scrollView snapToNearestBox];
