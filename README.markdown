@@ -1,20 +1,20 @@
 # MGBox - A UITableView replacement with simplified API
 
+Designed for rapid table creation with minimal code, easy customisation, and with most common design patterns automated without need for fidgety UIView tweaking.
+
 ## Key Features
 
-- Rapid table creation without verbose code requirements
-- Easy subclassing for creating custom box styles
-- Optional edge snapping on scroll
-- Box lines accept `NSStrings` and `UIImages`, automatically wrapping them in 
-  `UILabels` and `UIImageViews`
-- Box lines accept and automatically layout arbitrary `UIViews` 
+- Box lines accepts and automatically lay out arbitrary arrays of `UIViews`, 
+  `NSStrings`, and `UIImages`
 - Create box lines with multiline text, automatically formatted and sized
-- Automatic line content layout, with intelligent handling of space limitations
+- Intelligent handling of space limitations, with optional left or right side 
+  precedence 
 - Separate arrays for `topLines`, `middleLines`, and `bottomLines`, to simplify 
-  common patterns
+  common layout patterns
 - Animated box adding, removing, and moving
 - A convenience `screenshot` method for capturing `UIImages` of boxes with 
   subtle drop shadows
+- Optional edge snapping on scroll
 
 ## Setup
 
